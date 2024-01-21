@@ -27,7 +27,7 @@ This project provides a Portfolio Object in RStudio designed for portfolio optim
 
 ## Getting Started
 
-### Prerequisites
+### 1. Prerequisites
 
 Make sure you have the following R packages installed:
 
@@ -35,7 +35,7 @@ Make sure you have the following R packages installed:
 - `plotly`: [plotly package](https://cran.r-project.org/package=plotly)
 - `tibble`: [tibble package](https://cran.r-project.org/package=tibble)
 
-### Setup
+### 2. Setup
 
 1. Download or clone the project from GitHub.
 2. Set the working directory in `portfolioMain.R` to the location of the project.
@@ -53,3 +53,37 @@ setwd(path)
 source('portfolioObject.R')
 ```
 
+### 3. Data
+
+1. Load historical stock data (example provided for AAPL, MSFT, GOOGL, AMZN).
+
+```R
+#AAPL data frame from https://finance.yahoo.com/quote/AAPL?p=AAPL&.tsrc=fin-srch
+AAPL.df <- read.csv("AAPL.csv")
+#MSFT data frame from https://finance.yahoo.com/quote/MSFT?p=MSFT&.tsrc=fin-srch
+MSFT.df <- read.csv("MSFT.csv")
+#GOOGL data frame from https://finance.yahoo.com/quote/GOOGL?p=GOOGL&.tsrc=fin-srch
+GOOGL.df <- read.csv("GOOGL.csv")
+#AMZN data frame from https://finance.yahoo.com/quote/AMZN?p=AMZN&.tsrc=fin-srch
+AMZN.df <- read.csv("AMZN.csv")
+```
+
+### 4. Instance of the Portfolio Object
+
+1. Create a list of names for each stock.
+
+```R
+# names of the stocks
+names <- c("AAPL","MSFT","GOOGL","AMZN")
+```
+
+2. Create an instance of the portfolio.
+
+```R
+# instance of the portfolio object
+port.obj <- portfolio(AAPL.df,MSFT.df,GOOGL.df,AMZN.df,names.list= names, RF= 0.0,num.ports = 6000)
+```
+
+### 5. Utilize various functions and plots
+
+1. Stock statistics
