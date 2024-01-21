@@ -1,4 +1,4 @@
-# Portfolio Optimization in Rstudio
+# Portfolio Optimization in RStudio
 
 ## Overview
 
