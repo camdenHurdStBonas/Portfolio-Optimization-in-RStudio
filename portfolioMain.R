@@ -54,6 +54,9 @@ port.obj <- portfolio(AAPL.df,MSFT.df,GOOGL.df,AMZN.df,names.list= names, RF= 0.
 port_stats <- port.obj$get.Stats()
 
 # portfolio correlation
+port_cov <- port.obj$get.Cov()
+
+# portfolio correlation
 port_cor <- port.obj$get.Cor()
 
 # portfolio mvp
