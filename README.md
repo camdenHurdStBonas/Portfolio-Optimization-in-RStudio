@@ -160,5 +160,16 @@ This will generate a bar chart illustrating the weights of stocks in the Mean-Va
 
 ## Work Cited
 
+“Chatgpt.” ChatGPT, https://openai.com/chatgpt.
+
+Dancho, Matt. “A Tool Kit for Working with Time Series [R Package Timetk Version 2.9.0].” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 31 Oct. 2023, https://cran.r-project.org/web/packages/timetk/index.html. 
+
+DD. “Coding Finance -.” Portfolio Optimization in R, 31 May 2018, www.codingfinance.com/post/2018-05-31-portfolio-opt-in-r/. 
+
+Müller, Kirill. “Simple Data Frames [R Package Tibble Version 3.2.1].” The Comprehensive R Archive Network, Comprehensive R Archive Network (CRAN), 20 Mar. 2023, https://cran.r-project.org/package=tibble. 
+
+Sievert C (2020). Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC. ISBN 9781138331457, https://plotly-r.com.
+
+
 ## License
 This project is licensed under the MIT License.
