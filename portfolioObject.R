@@ -2,10 +2,10 @@
 #   Use historical stock data from Yahoo! fiance to get the optimized portfolio and statistics
 #
 # Input: 
-#   csv files of stock data from yahoo! finance
-#   list of names for each stock
-#   risk free rate by default set to zero used for Sharpe ratio of individual stocks and portfolios (not used for excess returns)
-#   the number of portfolios for the efficient frontier
+#   ...: csv files of stock data from yahoo! finance
+#   names.list: list of names for each stock
+#   RF: risk free rate by default set to zero used for Sharpe ratio of individual stocks and portfolios (not used for excess returns)
+#   num.ports: the number of portfolios for the efficient frontier
 # Output:
 #   Default: returns the object environment
 #   get.Cov: returns the covariance matrix of all the stocks
