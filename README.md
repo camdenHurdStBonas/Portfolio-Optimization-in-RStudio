@@ -93,12 +93,16 @@ port.obj <- portfolio(AAPL.df,MSFT.df,GOOGL.df,AMZN.df,names.list= names, RF= 0.
 port_stats <- port.obj$get.Stats()
 ```
 
+This will return the average, geometric average, standard deviation, and Sharpe ratio of all stocks in the portfolio.
+
 2. Stock covariances
 
 ```R
 # portfolio correlation
 port_cor <- port.obj$get.Cov()
 ```
+
+This will return the covariance matrix of all stocks in the portfolio.
 
 3. Stock correlations
 
@@ -107,12 +111,16 @@ port_cor <- port.obj$get.Cov()
 port_cor <- port.obj$get.Cor()
 ```
 
+This will return the correlation matrix of all stocks in the portfolio.
+
 4. Minimum variance portfolio
 
 ```R
 # portfolio mvp
 port_mvp <- port.obj$get.MVP()
 ```
+
+This will return the weights and statistics of the Minimum Variance Portfolio.
 
 5. Mean-variance efficient portfolio
 
@@ -121,12 +129,16 @@ port_mvp <- port.obj$get.MVP()
 port_mvep <- port.obj$get.MVEP()
 ```
 
+This will return the weights and statistics of the Mean-Variance Efficient Portfolio.
+
 6. Efficient fronteir plot
 
 ```R
 # Effecient frontier plot
 port.obj$plot.EF()
 ```
+
+This will generate a plot of the efficient frontier, showing the trade-off between expected return and portfolio risk.
 
 7. Minimum variance portfolio bar chart
 
@@ -135,12 +147,18 @@ port.obj$plot.EF()
 port.obj$plot.MVP()
 ```
 
+This will generate a bar chart illustrating the weights of stocks in the Minimum Variance Portfolio and statistics of the portfolio.
+
 8. Mean-variance efficient portfolio bar chart
 
 ```R
 # MVEP bar chart
 port.obj$plot.MVEP()
 ```
+
+This will generate a bar chart illustrating the weights of stocks in the Mean-Variance Efficient Portfolio and statistics of the portfolio.
+
+## Work Cited
 
 ## License
 This project is licensed under the MIT License.
