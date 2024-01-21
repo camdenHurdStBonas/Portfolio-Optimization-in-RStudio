@@ -18,7 +18,7 @@ library(plotly)
 # https://cran.r-project.org/package=tibble
 library(tibble)
 
-#import portfolioObject.R; self created commands
+#import portfolioObject.R
 source('portfolioObject.R')
 
 
@@ -44,7 +44,7 @@ AMZN.df <- read.csv("AMZN.csv")
 names <- c("AAPL","MSFT","GOOGL","AMZN")
 
 # instance of the portfolio object
-port.obj <- portfolio(AAPL.df,MSFT.df,GOOGL.df,AMZN.df,names.list= names,num.ports = 50000)
+port.obj <- portfolio(AAPL.df,MSFT.df,GOOGL.df,AMZN.df,names.list= names, RF= 0.0,num.ports = 6000)
 
 
 # Functions
