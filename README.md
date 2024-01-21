@@ -142,3 +142,5 @@ port.obj$plot.MVP()
 port.obj$plot.MVEP()
 ```
 
+## License
+This project is licensed under the MIT License.
