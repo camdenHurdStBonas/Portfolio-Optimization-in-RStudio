@@ -104,8 +104,14 @@ This will return the average, geometric average, standard deviation, and Sharpe 
 2. Stock covariances
 
 ```R
-# portfolio correlation
+# portfolio covariance
 port_cor <- port.obj$get.Cov()
+> port_cov 
+             AAPL        MSFT       GOOGL        AMZN
+AAPL  0.008977337 0.002779139 0.004105582 0.003843546
+MSFT  0.002779139 0.004362489 0.002850251 0.003048506
+GOOGL 0.004105582 0.002850251 0.007555437 0.003632038
+AMZN  0.003843546 0.003048506 0.003632038 0.011128899
 ```
 
 This will return the covariance matrix of all stocks in the portfolio.
@@ -115,6 +121,7 @@ This will return the covariance matrix of all stocks in the portfolio.
 ```R
 # portfolio correlation
 port_cor <- port.obj$get.Cor()
+
 ```
 
 This will return the correlation matrix of all stocks in the portfolio.
