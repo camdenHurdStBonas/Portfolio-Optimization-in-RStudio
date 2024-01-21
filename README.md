@@ -55,7 +55,7 @@ source('portfolioObject.R')
 
 ### 3. Data
 
-\tLoad historical stock data (example provided for AAPL, MSFT, GOOGL, AMZN).
+Load historical stock data (example provided for AAPL, MSFT, GOOGL, AMZN).
 
 ```R
 #AAPL data frame from https://finance.yahoo.com/quote/AAPL?p=AAPL&.tsrc=fin-srch
@@ -87,3 +87,58 @@ port.obj <- portfolio(AAPL.df,MSFT.df,GOOGL.df,AMZN.df,names.list= names, RF= 0.
 ### 5. Utilize various functions and plots
 
 1. Stock statistics
+
+```R
+# portfolio statistics
+port_stats <- port.obj$get.Stats()
+```
+
+2. Stock covariances
+
+```R
+# portfolio correlation
+port_cor <- port.obj$get.Cov()
+```
+
+3. Stock correlations
+
+```R
+# portfolio correlation
+port_cor <- port.obj$get.Cor()
+```
+
+4. Minimum variance portfolio
+
+```R
+# portfolio mvp
+port_mvp <- port.obj$get.MVP()
+```
+
+5. Mean-variance efficient portfolio
+
+```R
+# portfoilio mvep
+port_mvep <- port.obj$get.MVEP()
+```
+
+6. Efficient fronteir plot
+
+```R
+# Effecient frontier plot
+port.obj$plot.EF()
+```
+
+7. Minimum variance portfolio bar chart
+
+```R
+# MVP bar chart
+port.obj$plot.MVP()
+```
+
+8. Mean-variance efficient portfolio bar chart
+
+```R
+# MVEP bar chart
+port.obj$plot.MVEP()
+```
+
