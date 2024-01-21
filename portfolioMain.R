@@ -53,7 +53,7 @@ port.obj <- portfolio(AAPL.df,MSFT.df,GOOGL.df,AMZN.df,names.list= names, RF= 0.
 # portfolio statistics
 port_stats <- port.obj$get.Stats()
 
-# portfolio correlation
+# portfolio covariance
 port_cov <- port.obj$get.Cov()
 
 # portfolio correlation
