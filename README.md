@@ -91,6 +91,12 @@ port.obj <- portfolio(AAPL.df,MSFT.df,GOOGL.df,AMZN.df,names.list= names, RF= 0.
 ```R
 # portfolio statistics
 port_stats <- port.obj$get.Stats()
+> port_stats
+      Average Geo Mean Standard Deviation Sharpe Ratio Count
+AAPL     2.99     2.55               9.47       0.3160   231
+MSFT     1.55     1.34               6.60       0.2348   231
+GOOGL    1.99     1.63               8.69       0.2288   231
+AMZN     2.42     1.89              10.55       0.2298   231
 ```
 
 This will return the average, geometric average, standard deviation, and Sharpe ratio of all stocks in the portfolio.
