@@ -188,6 +188,8 @@ This will generate a bar chart illustrating the weights of stocks in the Minimum
 port.obj$plot.MVEP()
 ```
 
+![Screenshot 2024-01-21 at 10 41 14 AM](https://github.com/camdenHurdStBonas/Portfolio-Optimization-in-Rstudio/assets/112513088/b625cccf-02ea-4abd-8fda-cc970862fb6f)
+
 This will generate a bar chart illustrating the weights of stocks in the Mean-Variance Efficient Portfolio and statistics of the portfolio.
 
 ## Work Cited
