@@ -159,7 +159,7 @@ port_mvep <- port.obj$get.MVEP()
 
 This will return the weights and statistics of the Mean-Variance Efficient Portfolio.
 
-6. Efficient fronteir plot
+6. Efficient frontier plot
 
 ```R
 # Effecient frontier plot
