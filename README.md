@@ -43,4 +43,13 @@ Make sure you have the following R packages installed:
 ```R
 # Set the variable "path" to the name of the Working Directory
 path <- "/path/to/Portfolio-Optimization-in-Rstudio"
-setwd(path)```
+setwd(path)
+```
+
+3. Run portfolioMain.R.
+
+```R
+#import portfolioObject.R
+source('portfolioObject.R')
+```
+
