@@ -12,7 +12,7 @@ This project provides a Portfolio Object in RStudio designed for portfolio optim
 - `names.list`: List of names for each stock.
 - `RF`: Risk-free rate (default set to zero) used for Sharpe ratio calculations.
 - `num.ports`: The number of portfolios for the efficient frontier.
-
+  
 ### Output:
 
 - Default: Returns the object environment.
@@ -121,7 +121,12 @@ This will return the covariance matrix of all stocks in the portfolio.
 ```R
 # portfolio correlation
 port_cor <- port.obj$get.Cor()
-
+> port_cor 
+           AAPL      MSFT     GOOGL      AMZN
+AAPL  1.0000000 0.4440883 0.4985069 0.3845318
+MSFT  0.4440883 1.0000000 0.4964621 0.4375159
+GOOGL 0.4985069 0.4964621 1.0000000 0.3960906
+AMZN  0.3845318 0.4375159 0.3960906 1.0000000
 ```
 
 This will return the correlation matrix of all stocks in the portfolio.
@@ -131,6 +136,11 @@ This will return the correlation matrix of all stocks in the portfolio.
 ```R
 # portfolio mvp
 port_mvp <- port.obj$get.MVP()
+> port_mvp
+# A tibble: 1 × 7
+   AAPL  MSFT GOOGL   AMZN Return   Risk Sharpe
+  <dbl> <dbl> <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
+1 0.134 0.601 0.176 0.0897  0.019 0.0619  0.306
 ```
 
 This will return the weights and statistics of the Minimum Variance Portfolio.
@@ -140,6 +150,11 @@ This will return the weights and statistics of the Minimum Variance Portfolio.
 ```R
 # portfoilio mvep
 port_mvep <- port.obj$get.MVEP()
+> port_mvep
+# A tibble: 1 × 7
+   AAPL  MSFT  GOOGL  AMZN Return   Risk Sharpe
+  <dbl> <dbl>  <dbl> <dbl>  <dbl>  <dbl>  <dbl>
+1 0.478 0.250 0.0984 0.173 0.0243 0.0703  0.346
 ```
 
 This will return the weights and statistics of the Mean-Variance Efficient Portfolio.
