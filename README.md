@@ -55,7 +55,7 @@ source('portfolioObject.R')
 
 ### 3. Data
 
-  Load historical stock data (example provided for AAPL, MSFT, GOOGL, AMZN).
+\tLoad historical stock data (example provided for AAPL, MSFT, GOOGL, AMZN).
 
 ```R
 #AAPL data frame from https://finance.yahoo.com/quote/AAPL?p=AAPL&.tsrc=fin-srch
