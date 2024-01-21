@@ -165,6 +165,7 @@ This will return the weights and statistics of the Mean-Variance Efficient Portf
 # Effecient frontier plot
 port.obj$plot.EF()
 ```
+
 ![Screenshot 2024-01-21 at 10 38 08 AM](https://github.com/camdenHurdStBonas/Portfolio-Optimization-in-Rstudio/assets/112513088/66e7b8b2-51f7-46bf-acce-a4c713e50b2f)
 
 This will generate a plot of the efficient frontier, showing the trade-off between expected return and portfolio risk.
@@ -175,6 +176,8 @@ This will generate a plot of the efficient frontier, showing the trade-off betwe
 # MVP bar chart
 port.obj$plot.MVP()
 ```
+
+![Screenshot 2024-01-21 at 10 39 51 AM](https://github.com/camdenHurdStBonas/Portfolio-Optimization-in-Rstudio/assets/112513088/21369117-eaec-46fb-ba71-d24f771ad8ca)
 
 This will generate a bar chart illustrating the weights of stocks in the Minimum Variance Portfolio and statistics of the portfolio.
 
