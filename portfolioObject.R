@@ -166,6 +166,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     obj$port.returns[i] <- mean(obj$port.weight.return,na.rm = TRUE)
     
     # Risk calculation
+    #obj$port.risk[i]  <- sqrt(t(obj$wts) %*% (obj$cov.matrix %*% obj$wts))
     obj$port.risk[i]  <- sd(obj$port.weight.return,na.rm = TRUE)
     
     # Sharpe Calculation
@@ -320,6 +321,9 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     avg_return <- mean(obj$weighted.returns, na.rm = TRUE)
     std_dev <- sd(obj$weighted.returns, na.rm = TRUE)
     sharpe_ratio <- (avg_return - RF) / std_dev
+    skew <- skewness(obj$weighted.returns)
+    kurt <- kurtosis(obj$weighted.returns)
+    
     
     end_value <- obj$weighted.value[length(obj$weighted.value)]
     num_years <- length(obj$weighted.value) / cpery
@@ -336,8 +340,10 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     legend("topleft", legend = paste(names.list, ": ", round(weights, 3)*100,"%"), col = "black", bty = "n")
     
     # Adding legend for returns with additional information
-    legend("bottomleft", legend = c(paste("Average:", round(avg_return, 4)*100,"%"), 
+    legend("bottomright", legend = c(paste("Average:", round(avg_return, 4)*100,"%"), 
                                   paste("Standard Deviation:", round(std_dev, 4)*100,"%"), 
+                                  paste("Skewness:", round(skew, 4)*100,"%"),
+                                  paste("Kurtosis:", round(kurt, 4)*100,"%"),
                                   paste("Sharpe Ratio:", round(sharpe_ratio, 4))), bty = 'n')
    
     
@@ -345,9 +351,26 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     
     grid(col='black')
     
-    legend("topleft", legend = c(paste(names.list, ": ", round(weights, 3)*100,"%"),
-                                 paste("CAGR:", round(cagr * 100, 2), "%")),
+    legend("topleft", legend = c(paste(names.list, ": ", round(weights, 3)*100,"%")),
            col = "black", bty = "n")
+    legend("bottomright", legend = c(paste("CAGR:", round(cagr * 100, 2), "%")),
+           col = "black", bty = "n")
+    
+    hist(obj$weighted.returns*100, main = "Histogram of Weighted Returns", xlab = "Return", ylab = "Frequency", freq = FALSE)
+    
+    legend("topleft", legend = c(paste("Average:", round(avg_return, 4)*100,"%"), 
+                                 paste("Standard Deviation:", round(std_dev, 4)*100,"%"), 
+                                 paste("Skewness:", round(skew, 4)*100,"%"),
+                                 paste("Kurtosis:", round(kurt, 4)*100,"%")
+                                 ), bty = 'n')
+    
+    # Generate x values for the normal distribution curve
+    x <- seq(min(obj$weighted.returns*100), max(obj$weighted.returns*100), length.out = 100)
+    
+    # Calculate corresponding y values for the normal distribution curve
+    y <- dnorm(x, mean = avg_return*100, sd = std_dev*100)
+    
+    lines(x, y, col = "red", lwd = 2)
     
   }
   
