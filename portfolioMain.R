@@ -4,7 +4,7 @@
 rm(list=ls())
 
 #sets the variable "path" to the name of Working Directory
-path <- "/Users/camdenhurd/desktop/desktop/Github/Portfolio Optimization in Rstudio"
+path <- "/Users/desktop/Github/Portfolio Optimization in Rstudio"
 
 #Set the Working Directory using the variable "path"
 setwd(path)
