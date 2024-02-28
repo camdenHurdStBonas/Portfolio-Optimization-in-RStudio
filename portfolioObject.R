@@ -64,7 +64,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     for (i in 2:length(df)){
       
       # calculates the rate
-      rate = df[i]/df[i-1] - 1
+      rate = log(df[i]/df[i-1]) - RF
       
       # add the new rate onto the existing rate
       final_rates <- c(final_rates, rate)
