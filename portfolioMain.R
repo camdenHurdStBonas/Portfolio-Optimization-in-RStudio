@@ -73,3 +73,12 @@ port.obj$plot.MVP()
 
 # MVEP bar chart
 port.obj$plot.MVEP()
+
+# Set your weights
+weights <- c(.4,.3,.2,.1)
+
+# weighted portfolio returns
+port.obj$plot.returns(weights)
+
+# MVEP portfolio returns
+port.obj$plot.returns(as.numeric(port_mvep[1:length(names)]))
