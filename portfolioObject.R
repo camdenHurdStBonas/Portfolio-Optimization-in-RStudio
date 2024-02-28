@@ -331,7 +331,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     abline(h = 0, lty = 2)
     
     # Adding legend for names and weights
-    legend("topleft", legend = paste(names.list, ": ", round(weights, 1)*100,"%"), col = "black", bty = "n")
+    legend("topleft", legend = paste(names.list, ": ", round(weights, 3)*100,"%"), col = "black", bty = "n")
     
     # Adding legend for returns with additional information
     legend("bottomleft", legend = c(paste("Average:", round(avg_return, 4)*100,"%"), 
@@ -343,7 +343,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     
     grid(col='black')
     
-    legend("topleft", legend = c(paste(names.list, ": ", round(weights, 1)*100,"%"),
+    legend("topleft", legend = c(paste(names.list, ": ", round(weights, 3)*100,"%"),
                                  paste("CAGR:", round(cagr * 100, 2), "%")),
            col = "black", bty = "n")
     
