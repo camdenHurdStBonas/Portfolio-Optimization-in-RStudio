@@ -166,6 +166,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     obj$port.returns[i] <- mean(obj$port.weight.return,na.rm = TRUE)
     
     # Risk calculation
+    #obj$port.risk[i]  <- sqrt(t(obj$wts) %*% (obj$cov.matrix %*% obj$wts))
     obj$port.risk[i]  <- sd(obj$port.weight.return,na.rm = TRUE)
     
     # Sharpe Calculation
