@@ -10,7 +10,7 @@ This project provides a Portfolio Object in RStudio designed for portfolio optim
 
 - `...`: CSV files of stock data from Yahoo! Finance.
 - `names.list`: List of names for each stock.
-- `RF`: Risk-free rate (default set to zero) used for Sharpe ratio calculations.
+- `RF`: Risk-free rate (integer by default set to zero) used for very period excess return and Sharpe ratio calculations.
 - `num.ports`: The number of portfolios for the efficient frontier.
   
 ### Output:
