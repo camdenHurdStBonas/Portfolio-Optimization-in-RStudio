@@ -78,6 +78,8 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
   # Find the minimum length among all columns
   obj$min_length <- min(sapply(obj$data.frames, nrow))-1
   
+  obj$date <- as.Date(tail(obj$data.frames[[1]]$Date,obj$min_length))
+  
   # Extract and manipulate the single column from each data frame
   obj$manipulated_columns <- lapply(obj$data.frames, function(df) {
     
@@ -159,7 +161,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     obj$all.wts[i,] <- obj$wts
     
     # Return calculation
-    obj$port.returns[i] <- sum(obj$stats.matrix[,"Average"]/100*obj$wts)
+    obj$port.returns[i] <- mean(rowSums(obj$combined.data*obj$wts,na.rm = TRUE))
     
     # Risk calculation
     obj$port.risk[i]  <- sqrt(t(obj$wts) %*% (obj$cov.matrix %*% obj$wts))
@@ -304,6 +306,46 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     
     # Makes the plot
     ggplotly(p)
+    
+  }
+  
+  obj$plot.returns <- function(weights,cpery=12) {
+    
+    obj$weighted.returns <- rowSums(obj$combined.data * weights)
+    obj$weighted.value <- 100 * cumprod(obj$weighted.returns + 1)
+    
+    # Calculate average, standard deviation, and Sharpe ratio
+    avg_return <- mean(obj$weighted.returns, na.rm = TRUE)
+    std_dev <- sd(obj$weighted.returns, na.rm = TRUE)
+    sharpe_ratio <- (avg_return - RF) / std_dev
+    
+    end_value <- obj$weighted.value[length(obj$weighted.value)]
+    num_years <- length(obj$weighted.value) / cpery
+    cagr <- (end_value / 100)^(1/num_years) - 1
+    
+    plot(obj$date,obj$weighted.returns*100,type="l", xlab = "Date", ylab = "Weighted Returns (%)", main = "Weighted Returns over Time",col='blue')
+    
+    grid(col='black')
+    
+    # Adding a dotted line at y = 0
+    abline(h = 0, lty = 2)
+    
+    # Adding legend for names and weights
+    legend("topleft", legend = paste(names.list, ": ", round(weights, 1)*100,"%"), col = "black", bty = "n")
+    
+    # Adding legend for returns with additional information
+    legend("bottomleft", legend = c(paste("Average:", round(avg_return, 4)*100,"%"), 
+                                  paste("Standard Deviation:", round(std_dev, 4)*100,"%"), 
+                                  paste("Sharpe Ratio:", round(sharpe_ratio, 4))), bty = 'n')
+   
+    
+    plot(obj$date,obj$weighted.value,type="l", xlab = "Date", ylab = "Value ($)", main = "Weighted Value over Time ($100 Invested)",col='blue')
+    
+    grid(col='black')
+    
+    legend("topleft", legend = c(paste(names.list, ": ", round(weights, 1)*100,"%"),
+                                 paste("CAGR:", round(cagr * 100, 2), "%")),
+           col = "black", bty = "n")
     
   }
   
