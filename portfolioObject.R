@@ -19,7 +19,7 @@
 
 
 # portfolio object
-portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
+portfolio <- function(..., names.list=NULL, rf, num.ports = 5000) {
   
   # Create an environment to store local variables
   obj <- new.env()
@@ -44,11 +44,6 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     }
   }
   
-  # Check if RF is a decimal number greater than or equal to 0 and less than 1
-  if (!is.numeric(RF) || RF < 0 || RF >= 1) {
-    stop("RF must be a decimal number greater than or equal to 0 and less than 1.")
-  }
-  
   # Check if num.ports is a whole number greater than 0
   if (!is.numeric(num.ports) || num.ports <= 0 || num.ports != round(num.ports)) {
     stop("num.ports must be a whole number greater than 0.")
@@ -64,7 +59,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     for (i in 2:length(df)){
       
       # calculates the rate
-      rate = log(df[i]/df[i-1]) - RF
+      rate = log(df[i]/df[i-1]) - (obj$rf[i-1]/100/12)
       
       # add the new rate onto the existing rate
       final_rates <- c(final_rates, rate)
@@ -80,6 +75,10 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
   
   obj$date <- as.Date(tail(obj$data.frames[[1]]$Date,obj$min_length))
   
+  obj$rf <- tail(rf$Adj.Close,obj$min_length)
+  
+  obj$ERF <- mean(obj$rf/100)/12
+  
   # Extract and manipulate the single column from each data frame
   obj$manipulated_columns <- lapply(obj$data.frames, function(df) {
     
@@ -90,8 +89,8 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     length_diff <- obj$min_length - length(manipulated_values)
     if (length_diff > 0) {
       manipulated_values <- c(manipulated_values, rep(NA, length_diff))
-    } else if (length_diff <= 0) {
-      manipulated_values <- tail(manipulated_values, obj$min_length)
+    } else if (length_diff < 0) {
+      manipulated_values <- manipulated_values[1:obj$min_length]
     }
     
     # return the manipulated values back to the coulmns
@@ -133,7 +132,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     obj$stats.matrix[i, 3] <- round(sd(col.data, na.rm = TRUE),4)*100
     
     # Sharpe Ratio
-    obj$stats.matrix[i, 4] <- round((mean(col.data, na.rm = TRUE) - RF)/sd(col.data, na.rm = TRUE),4)
+    obj$stats.matrix[i, 4] <- round((mean(col.data, na.rm = TRUE) - obj$ERF)/sd(col.data, na.rm = TRUE),4)
     
     # Count
     obj$stats.matrix[i, 5] <- sum(!is.na(col.data))
@@ -169,7 +168,7 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     obj$port.risk[i]  <- sd(obj$port.weight.return,na.rm = TRUE)
     
     # Sharpe Calculation
-    obj$port.sharpe[i] <- (obj$port.returns[i]- RF) / obj$port.risk[i]
+    obj$port.sharpe[i] <- (obj$port.returns[i]- obj$ERF) / obj$port.risk[i]
   }
   
   # tibble creation of all the possible portfolios and their weights, returns, risks, and sharpe
@@ -318,15 +317,21 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     
     # Calculate average, standard deviation, and Sharpe ratio
     avg_return <- mean(obj$weighted.returns, na.rm = TRUE)
+    obj$avg_return <- avg_return
     std_dev <- sd(obj$weighted.returns, na.rm = TRUE)
-    sharpe_ratio <- (avg_return - RF) / std_dev
+    obj$std_dev <- std_dev
+    sharpe_ratio <- (avg_return - obj$ERF) / std_dev
     skew <- skewness(obj$weighted.returns)
+    obj$skew <- skew
     kurt <- kurtosis(obj$weighted.returns)
-    
+    obj$kurt <- kurt
     
     end_value <- obj$weighted.value[length(obj$weighted.value)]
     num_years <- length(obj$weighted.value) / cpery
     cagr <- (end_value / 100)^(1/num_years) - 1
+    
+    print(shapiro.test(obj$weighted.returns))
+    print(ks.test(obj$weighted.returns,"pnorm", mean=avg_return,sd=std_dev))
     
     plot(obj$date,obj$weighted.returns*100,type="l", xlab = "Date", ylab = "Weighted Returns (%)", main = "Weighted Returns over Time",col='blue')
     
@@ -355,21 +360,33 @@ portfolio <- function(..., names.list=NULL, RF=0.0, num.ports = 5000) {
     legend("bottomright", legend = c(paste("CAGR:", round(cagr * 100, 2), "%")),
            col = "black", bty = "n")
     
-    hist(obj$weighted.returns*100, main = "Histogram of Weighted Returns", xlab = "Return", ylab = "Frequency", freq = FALSE)
+    
+    
+    
+    hist(obj$weighted.returns*100, main = "Histogram of Weighted Returns", xlab = "Return %", ylab = "Frequency", freq = TRUE,breaks=30,labels=TRUE)
     
     legend("topleft", legend = c(paste("Average:", round(avg_return, 4)*100,"%"), 
                                  paste("Standard Deviation:", round(std_dev, 4)*100,"%"), 
                                  paste("Skewness:", round(skew, 4)*100,"%"),
-                                 paste("Kurtosis:", round(kurt, 4)*100,"%")
-                                 ), bty = 'n')
+                                 paste("Kurtosis:", round(kurt, 4)*100,"%"),"Normal"),
+                                 col=c('black','black','black','black','red'),
+                                 lty=c(NA,NA,NA,NA,1),
+                                 lwd=c(NA,NA,NA,NA,2),
+                                 bty = 'n')
+    
+    legend("topright", legend = c(paste(names.list, ": ", round(weights, 3)*100,"%")),
+           col = "black", bty = "n")
     
     # Generate x values for the normal distribution curve
-    x <- seq(min(obj$weighted.returns*100), max(obj$weighted.returns*100), length.out = 100)
+    x <- seq(min(obj$weighted.returns)*100, max(obj$weighted.returns)*100, length.out = 30)
     
     # Calculate corresponding y values for the normal distribution curve
-    y <- dnorm(x, mean = avg_return*100, sd = std_dev*100)
+    y<- round((dnorm(x/100, mean = avg_return, sd = std_dev) / sum(dnorm(x/100, mean = avg_return, sd = std_dev))) * length(obj$weighted.returns),1)
     
     lines(x, y, col = "red", lwd = 2)
+    
+    grid(col='black')
+
     
   }
   
